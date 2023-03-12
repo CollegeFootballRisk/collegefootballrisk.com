@@ -9,9 +9,10 @@
       document.getElementById(event.target.value).classList.add("show");
       event.target.parentElement.classList.add("chequed");
     }
-    document.querySelectorAll("input[name='tab']").forEach((input) => {
+
+    window.onload = function() {document.querySelectorAll("input[name='tab']").forEach((input) => {
       input.addEventListener('change', myfunction);
-    });
+    })};
 
     </script>
     <style>
@@ -47,7 +48,7 @@ body {
   backdrop-filter: blur(10px);
   padding: 20px 40px;
   box-sizing: border-box;
-  height: 90%;
+  height: 95%;
   margin-top: 2.5%;
   margin-bottom: 2.5%;
   overflow: scroll;
