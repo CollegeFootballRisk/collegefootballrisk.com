@@ -1,0 +1,2041 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "rust-risk",
+    "version": "0.3.0"
+  },
+  "servers": [
+    {
+      "url": "/api"
+    }
+  ],
+  "paths": {
+    "/players": {
+      "get": {
+        "tags": [
+          "Player"
+        ],
+        "summary": "List of all players, including id, team, and name for all time",
+        "description": "Returns all players, but provides simplified data structure for smaller payload size. Unlike other methods, this one will return before a player has been part of a roll.",
+        "operationId": "player_players",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SimplePlayer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/active": {
+      "get": {
+        "tags": [
+          "Player"
+        ],
+        "summary": "List of all active players, including id, team, and name for all teams",
+        "description": "Returns all active players, but provides simplified data structure for smaller payload size. Unlike other methods, this one will return before a player has been part of a roll.",
+        "operationId": "player_players_active",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SimplePlayer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/search/{query}": {
+      "get": {
+        "tags": [
+          "Player"
+        ],
+        "summary": "Search for player(s) by partial name",
+        "description": "Search for player(s) by partial name",
+        "operationId": "player_player_search",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SimplePlayer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/player/{player_id}": {
+      "get": {
+        "tags": [
+          "Player"
+        ],
+        "summary": "Retrieve metadata for a player",
+        "description": "**Note:** this requires a `player`'s `id` to be sent, which can be obtained from any query returning a `SimplePlayer` such as `/players/search/<query>` or `/players` or `/team/{team.id}/players` or `/team/{team.id}/mercs`",
+        "operationId": "player_player_meta",
+        "parameters": [
+          {
+            "name": "player_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Player"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/player/{player_id}/moves": {
+      "get": {
+        "tags": [
+          "Player"
+        ],
+        "summary": "Retrieve moves for a player",
+        "description": "_**Note:** this requires a `player`'s `id` to be sent, which can be obtained from any query returning a `SimplePlayer` such as `/players/search/<query>` or `/players` or `/team/{team.id}/players` or `/team/{team.id}/mercs`_",
+        "operationId": "player_player_moves",
+        "parameters": [
+          {
+            "name": "player_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Move"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/player/{player_id}/awards": {
+      "get": {
+        "tags": [
+          "Player"
+        ],
+        "summary": "Retrieve awards for a player",
+        "description": "_**Note:** this requires a `player`'s `id` to be sent, which can be obtained from any query returning a `SimplePlayer` such as `/players/search/<query>` or `/players` or `/team/{team.id}/players` or `/team/{team.id}/mercs`_",
+        "operationId": "player_player_awards",
+        "parameters": [
+          {
+            "name": "player_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AwardInfo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/player/{player_id}/roles": {
+      "get": {
+        "tags": [
+          "Player"
+        ],
+        "summary": "Retrieve roles for a player",
+        "description": "_**Note:** this requires a `player`'s `id` to be sent, which can be obtained from any query returning a `SimplePlayer` such as `/players/search/<query>` or `/players` or `/team/{team.id}/players` or `/team/{team.id}/mercs`_",
+        "operationId": "player_player_roles",
+        "parameters": [
+          {
+            "name": "player_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Role"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/player/{player_id}/links": {
+      "get": {
+        "tags": [
+          "Player"
+        ],
+        "summary": "Retrieve publicly linked accounts for a player",
+        "description": "_**Note:** this requires a `player`'s `id` to be sent, which can be obtained from any query returning a `SimplePlayer` such as `/players/search/<query>` or `/players` or `/team/{team.id}/players` or `/team/{team.id}/mercs`_",
+        "operationId": "player_player_links",
+        "parameters": [
+          {
+            "name": "player_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Link"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/batch": {
+      "get": {
+        "tags": [
+          "Player"
+        ],
+        "summary": "Retrieve player info, moves, awards for 1-100 players at once",
+        "description": "Batch retrieval of `players` - `players` should be a comma-separated list of up to and including 100 player.id without spaces.",
+        "operationId": "player_player_batch",
+        "parameters": [
+          {
+            "name": "players",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Player360"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events": {
+      "get": {
+        "tags": [
+          "Event"
+        ],
+        "summary": "Retrieve a list of events",
+        "description": "Parameters:\n\n- **since (DateTime String; \"2023-01-01T13:41:00\")**: Get data after this UTC timestamp\n\n- **after (Uuid)**: Get data created after this Event id\n\n- **event_type (Array of EventType; `[\"PlayerCreate\", \"PlayerMerge\"]`)**: Only get events matching these event types\n\n- **count (i32; 1<=x<=250)**: How many Events to retrieve (defaults to 100, can be no more than 250)\n\n- **page (i32)**: Which page to grab (used with Count)",
+        "operationId": "player_events",
+        "parameters": [
+          {
+            "name": "since",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Date Time",
+              "nullable": true
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "nullable": true
+            }
+          },
+          {
+            "name": "event_type",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/EventType"
+              },
+              "nullable": true
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Player360"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/turns": {
+      "get": {
+        "tags": [
+          "Turn"
+        ],
+        "summary": "List of all rolls, either for all seasons or just one.",
+        "description": "Returns information about all turns, or just the turns specified in `season if it is provided",
+        "operationId": "player_turns",
+        "parameters": [
+          {
+            "name": "season",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Turn"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/turn/{turn_id}": {
+      "get": {
+        "tags": [
+          "Turn"
+        ],
+        "summary": "Retrieve audit log for a turn/roll.",
+        "operationId": "player_turn_log",
+        "parameters": [
+          {
+            "name": "turn_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Turn360"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teams": {
+      "get": {
+        "tags": [
+          "Team"
+        ],
+        "summary": "List of all teams",
+        "description": "Returns a list of all teams, including those from past seasons",
+        "operationId": "player_teams",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Team"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/team/{team_id}/stats/history": {
+      "get": {
+        "tags": [
+          "Team"
+        ],
+        "operationId": "player_team_stat_history",
+        "parameters": [
+          {
+            "name": "team_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Team"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/team/{team_id}/stats": {
+      "get": {
+        "tags": [
+          "Team"
+        ],
+        "operationId": "player_team_stats",
+        "parameters": [
+          {
+            "name": "team_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Turn360"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teams/leaderboard": {
+      "get": {
+        "tags": [
+          "Team"
+        ],
+        "operationId": "player_team_leaderboard",
+        "parameters": [
+          {
+            "name": "turn_id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Turn360"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teams/search/{query}": {
+      "get": {
+        "tags": [
+          "Team"
+        ],
+        "operationId": "player_team_search",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SimpleTeam"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/team/{team_id}/players": {
+      "get": {
+        "tags": [
+          "Team"
+        ],
+        "operationId": "player_team_players",
+        "parameters": [
+          {
+            "name": "team_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Player"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/team/{team_id}/mercs": {
+      "get": {
+        "tags": [
+          "Team"
+        ],
+        "operationId": "player_team_mercs",
+        "parameters": [
+          {
+            "name": "team_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Player"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/team/{team_id}/odds/{turn_id}": {
+      "get": {
+        "tags": [
+          "Team"
+        ],
+        "operationId": "player_team_odds",
+        "parameters": [
+          {
+            "name": "team_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "turn_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TeamOdd"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/team/{team_id}/territories_visited/{season}": {
+      "get": {
+        "tags": [
+          "Team"
+        ],
+        "operationId": "player_territories_visited",
+        "parameters": [
+          {
+            "name": "team_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "season",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Territory"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cases": {
+      "get": {
+        "tags": [
+          "Case"
+        ],
+        "operationId": "player_get_cases",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Case"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/case": {
+      "post": {
+        "tags": [
+          "Case"
+        ],
+        "operationId": "player_create_case",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Case"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Case"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/case/{case_id}": {
+      "patch": {
+        "tags": [
+          "Case"
+        ],
+        "operationId": "player_update_case",
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Case"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Territory"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/case/{case_id}/notifications": {
+      "get": {
+        "tags": [
+          "Case"
+        ],
+        "operationId": "player_get_case_notifications",
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Case"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/case/{case_id}/notification": {
+      "post": {
+        "tags": [
+          "Case"
+        ],
+        "operationId": "player_create_case_notification",
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Notification"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Case"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notification": {
+      "post": {
+        "tags": [
+          "Notification"
+        ],
+        "operationId": "player_create_notification",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Notification"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Notification"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notifications": {
+      "get": {
+        "tags": [
+          "Notification"
+        ],
+        "operationId": "player_get_notifications",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Notification"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sys/info": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "System Information",
+        "description": "Information about the configuration of the backend.",
+        "operationId": "sys_route_sysinfo",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SystemInformation"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SimplePlayer": {
+        "title": "Lite Player",
+        "description": "Simple rendition of a player, with minimal information",
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "team"
+        ],
+        "properties": {
+          "id": {
+            "description": "[Limit: 36 Char] A player's id (UUID)",
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "description": "[Limit: 64 Char] A player's local username",
+            "type": "string"
+          },
+          "team": {
+            "$ref": "#/components/schemas/SimpleTeam"
+          }
+        }
+      },
+      "SimpleTeam": {
+        "title": "Lite Team",
+        "description": "Simple rendition of a team, with minimal information",
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "Player": {
+        "title": "Player Metadata",
+        "description": "Full metadata of a player\n\n_**Note:** Because players may request that their account be deleted (e.g. it is merged into another account or the user requests permanent deletion), a user may \"disapper\". If a user has requested their account to be merged, this will appear in the Event log so that their ID can be remapped accordingly. If a user has requested their account to be deleted, we will set their username to be `deleted_{player.id}` where player.id will be the UUID of the player without slashes._\n\n_**Note:** Once a player account has been merged or deleted, it cannot be restored with the same ID._",
+        "type": "object",
+        "required": [
+          "active_team",
+          "created",
+          "createdby",
+          "id",
+          "is_alt",
+          "name",
+          "ratings",
+          "stats",
+          "team",
+          "updated",
+          "updatedby"
+        ],
+        "properties": {
+          "id": {
+            "description": "[Limit: 36 Char] A player's ID",
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "description": "[Limit: 64 Char] A player's local username",
+            "type": "string"
+          },
+          "team": {
+            "description": "A player's home team (the original team they played for)\n\n_**Note:** This team may no longer be active, as it may have been eliminated_",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Team"
+              }
+            ]
+          },
+          "active_team": {
+            "description": "A player's guest team (the team they're currently playing for)\n\n_**Note:** A null `active_team` but non-null `team` means the player's team has been eliminated and they have yet to choose a new team._",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Team"
+              }
+            ]
+          },
+          "ratings": {
+            "description": "The star ratings [1<=x<=5] for a player",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Rating"
+              }
+            ]
+          },
+          "stats": {
+            "description": "The statistics for a player",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Stat"
+              }
+            ]
+          },
+          "is_alt": {
+            "description": "Whether a player has been flagged globally as an alt",
+            "type": "boolean"
+          },
+          "created": {
+            "description": "When a player was created\n\n_**Note:** If a player was created prior to January 1, 2023 (or the start of Season 3), then their creation date reflects the day their account was migrated, not the day they first signed up._",
+            "type": "boolean"
+          },
+          "updated": {
+            "description": "When a player was last updated\n\n_**Note:** This is enforced by the database and will likely be updated nightly (indicating that the user made a move and therefore had their statistics updated)._",
+            "type": "boolean"
+          },
+          "createdby": {
+            "description": "The player who created this player. This should either be the System user (UUID: `a147b32b-6779-462c-b20b-5f5bef4702fa`) or the MigrationUser (UUID: `be48ffec-e101-4d7c-9880-c2b25e86c355`).",
+            "type": "boolean"
+          },
+          "updatedby": {
+            "description": "The player who last updated this player. This could be the System user (UUID: `a147b32b-6779-462c-b20b-5f5bef4702fa`), the MigrationUser (UUID: `be48ffec-e101-4d7c-9880-c2b25e86c355`), an Admin, or potentially the user themself.",
+            "type": "boolean"
+          }
+        }
+      },
+      "Team": {
+        "title": "Team Metadata",
+        "description": "Full metadata of a team",
+        "type": "object",
+        "required": [
+          "colors",
+          "created",
+          "id",
+          "logo",
+          "name",
+          "seasons",
+          "updated"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "colors": {
+            "$ref": "#/components/schemas/Color"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "seasons": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "created": {
+            "type": "string",
+            "format": "partial-date-time"
+          },
+          "updated": {
+            "type": "string",
+            "format": "partial-date-time"
+          }
+        }
+      },
+      "Color": {
+        "title": "Team Colors",
+        "type": "object",
+        "required": [
+          "primary_color",
+          "secondary_color"
+        ],
+        "properties": {
+          "primary_color": {
+            "description": "The rgba primary (foreground) color of the team Format: `rgba(red, green, blue, alpha)` where red, green, blue, and alpha 0.0<=x<=255.0",
+            "type": "string"
+          },
+          "secondary_color": {
+            "description": "The rgba primary (accent) color of the team Format: `rgba(red, green, blue, alpha)` where red, green, blue, and alpha 0.0<=x<=255.0",
+            "type": "string"
+          }
+        }
+      },
+      "Rating": {
+        "title": "Player Star Rating",
+        "description": "A set of ratings (1-5) for a player",
+        "type": "object",
+        "required": [
+          "game_turns",
+          "mvps",
+          "overall",
+          "streak",
+          "turns"
+        ],
+        "properties": {
+          "overall": {
+            "description": "[Limit: 1<=x<=5] The overall star rating of the player, which is the up-rounded median of the other ratings",
+            "type": "integer",
+            "format": "int32"
+          },
+          "turns": {
+            "description": "[Limit: 1<=x<=5] The star rating for the number of turns made by the player in all games",
+            "type": "integer",
+            "format": "int32"
+          },
+          "game_turns": {
+            "description": "[Limit: 1<=x<=5] The star rating for the number of turns made by the player this game",
+            "type": "integer",
+            "format": "int32"
+          },
+          "mvps": {
+            "description": "[Limit: 1<=x<=5] The star rating for the number of times the player has been mvp in all games",
+            "type": "integer",
+            "format": "int32"
+          },
+          "streak": {
+            "description": "[Limit: 1<=x<=5] The star rating for the number of consecutive turns the player has made",
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Stat": {
+        "title": "Player Statistic",
+        "description": "A set of statistics about a player",
+        "type": "object",
+        "required": [
+          "game_turns",
+          "mvps",
+          "streak",
+          "turns"
+        ],
+        "properties": {
+          "turns": {
+            "description": "The total number of turns made by the player in all games",
+            "type": "integer",
+            "format": "int32"
+          },
+          "game_turns": {
+            "description": "The total number of turns made by the player in this game",
+            "type": "integer",
+            "format": "int32"
+          },
+          "mvps": {
+            "description": "The total number of times the player has been mvp in all games",
+            "type": "integer",
+            "format": "int32"
+          },
+          "streak": {
+            "description": "The total number of consecutive turns the player has made",
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Move": {
+        "title": "Move",
+        "description": "Gather metadata and related objects for a player",
+        "type": "object",
+        "required": [
+          "created",
+          "id",
+          "is_merc",
+          "is_mvp",
+          "multiplier",
+          "power",
+          "stars",
+          "team_id",
+          "territory_id",
+          "turn_id",
+          "updated",
+          "weight"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "territory_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "is_mvp": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "power": {
+            "type": "number",
+            "format": "double"
+          },
+          "multiplier": {
+            "type": "number",
+            "format": "double"
+          },
+          "weight": {
+            "type": "number",
+            "format": "double"
+          },
+          "stars": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "team_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "is_merc": {
+            "type": "boolean"
+          },
+          "turn_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "created": {
+            "type": "string",
+            "format": "partial-date-time"
+          },
+          "updated": {
+            "type": "string",
+            "format": "partial-date-time"
+          }
+        }
+      },
+      "AwardInfo": {
+        "title": "Award",
+        "description": "Information pertaining to an award given to a user",
+        "type": "object",
+        "required": [
+          "id",
+          "info",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "info": {
+            "type": "string"
+          }
+        }
+      },
+      "Role": {
+        "type": "object",
+        "required": [
+          "created",
+          "createdby",
+          "id",
+          "name",
+          "updated",
+          "updatedby"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "created": {
+            "description": "The timestamp of the creation of the `Role`",
+            "type": "string",
+            "format": "partial-date-time"
+          },
+          "updated": {
+            "description": "The timestamp of the last update to `Role`",
+            "type": "string",
+            "format": "partial-date-time"
+          },
+          "createdby": {
+            "description": "The `Uuid` of the `User` who created the `Role`",
+            "type": "string",
+            "format": "uuid"
+          },
+          "updatedby": {
+            "description": "The `Uuid` of the `User` who most recently updated `Role`",
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "Link": {
+        "title": "Player Linked Accounts",
+        "description": "The usernames on connected platforms the user has made publicly available",
+        "type": "object",
+        "required": [
+          "platform",
+          "username"
+        ],
+        "properties": {
+          "platform": {
+            "description": "[Limit: 10 Char] The name of the platform",
+            "type": "string"
+          },
+          "username": {
+            "description": "[Limit: 256 Char] The name of the user",
+            "type": "string"
+          }
+        }
+      },
+      "Player360": {
+        "title": "Player With Related Objects",
+        "description": "Gather metadata and related objects for a player",
+        "type": "object",
+        "required": [
+          "awards",
+          "links",
+          "moves",
+          "player"
+        ],
+        "properties": {
+          "player": {
+            "description": "Metadata for a player",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Player"
+              }
+            ]
+          },
+          "moves": {
+            "description": "A list of moves made by the player over all season",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Move"
+            }
+          },
+          "awards": {
+            "description": "A list of awards bequeathed to the player",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AwardInfo"
+            }
+          },
+          "links": {
+            "description": "A list of the player's publicly-released platform connections",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Link"
+            }
+          }
+        }
+      },
+      "Date Time": {
+        "type": "string"
+      },
+      "EventType": {
+        "oneOf": [
+          {
+            "description": "A player has been updated",
+            "type": "string",
+            "enum": [
+              "PlayerCreate"
+            ]
+          },
+          {
+            "description": "A player has been updated",
+            "type": "string",
+            "enum": [
+              "PlayerNameUpdate"
+            ]
+          },
+          {
+            "description": "A player has joined a team\n\n_**Note:** This only tracks `playing_for` team changes_",
+            "type": "string",
+            "enum": [
+              "PlayerTeamUpdate"
+            ]
+          },
+          {
+            "description": "A player has received an Award",
+            "type": "string",
+            "enum": [
+              "PlayerAward"
+            ]
+          },
+          {
+            "description": "A player has been merged\n\n- `before` indicates user's old id - `after` indicates user's new id",
+            "type": "string",
+            "enum": [
+              "PlayerMerge"
+            ]
+          },
+          {
+            "description": "A player has been deleted",
+            "type": "string",
+            "enum": [
+              "PlayerDelete"
+            ]
+          },
+          {
+            "description": "A territory has been decided for a turn\n\n- `before` indicates territory's old owner\n\n- `after` indicates territory's new owner\n\n- `description` is a string containing:\n\n- `value`: the value used to determine the territory ownership",
+            "type": "string",
+            "enum": [
+              "TerritoryDecision"
+            ]
+          },
+          {
+            "description": "A reroll has occured for a territory\n\n- `before` indicates territory's old owner\n\n- `after` indicates territory's new owner\n\n- `description` is a string containing:\n\n- `value`: the value used to determine the territory ownership\n\n_**Note:** A reroll will revoke all user moves made on the territory for the upcoming turn. A `Notification` will also be published to impacted users._",
+            "type": "string",
+            "enum": [
+              "TerritoryReroll"
+            ]
+          }
+        ]
+      },
+      "Turn": {
+        "title": "Turn",
+        "description": "Metadata for a specific turn",
+        "type": "object",
+        "required": [
+          "active",
+          "all_or_nothing",
+          "complete",
+          "created",
+          "createdby",
+          "day",
+          "finale",
+          "id",
+          "map",
+          "random_seed",
+          "rerolls",
+          "roll_end",
+          "roll_start",
+          "season",
+          "updated",
+          "updatedby"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "season": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "day": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "complete": {
+            "type": "boolean"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "finale": {
+            "type": "boolean"
+          },
+          "rerolls": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "roll_start": {
+            "type": "string",
+            "format": "partial-date-time"
+          },
+          "roll_end": {
+            "type": "string",
+            "format": "partial-date-time"
+          },
+          "all_or_nothing": {
+            "type": "boolean"
+          },
+          "map": {
+            "type": "string"
+          },
+          "random_seed": {
+            "type": "number",
+            "format": "double"
+          },
+          "created": {
+            "type": "string",
+            "format": "partial-date-time"
+          },
+          "updated": {
+            "type": "string",
+            "format": "partial-date-time"
+          },
+          "createdby": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "updatedby": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "Turn360": {
+        "type": "object",
+        "required": [
+          "events",
+          "turn"
+        ],
+        "properties": {
+          "turn": {
+            "$ref": "#/components/schemas/Turn"
+          },
+          "events": {
+            "$ref": "#/components/schemas/Event"
+          }
+        }
+      },
+      "Event": {
+        "title": "System Event",
+        "description": "Represents an event which users may wish to be notified about/track.\n\n_**Note:** Each `EventType` (`event_type`) has its own meaning for `before`, `after`, and `description`. See the documentation for `EventType` to know what those fields mean within the context of that `EventType`._",
+        "type": "object",
+        "required": [
+          "created",
+          "createdby",
+          "event_type",
+          "id",
+          "updated",
+          "updatedby"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "event_type": {
+            "$ref": "#/components/schemas/EventType"
+          },
+          "before": {
+            "type": "string",
+            "nullable": true
+          },
+          "after": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "active_turn": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "created": {
+            "type": "string",
+            "format": "partial-date-time"
+          },
+          "createdby": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "updated": {
+            "type": "string",
+            "format": "partial-date-time"
+          },
+          "updatedby": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "TeamOdd": {
+        "title": "Team Odds for Winning Territory",
+        "type": "object",
+        "required": [
+          "fives",
+          "fours",
+          "mvp",
+          "occupier",
+          "ones",
+          "players",
+          "team_chance",
+          "team_power",
+          "territory",
+          "territory_power",
+          "threes",
+          "twos",
+          "winner"
+        ],
+        "properties": {
+          "territory": {
+            "$ref": "#/components/schemas/Territory"
+          },
+          "occupier": {
+            "$ref": "#/components/schemas/SimpleTeam"
+          },
+          "winner": {
+            "$ref": "#/components/schemas/SimpleTeam"
+          },
+          "mvp": {
+            "$ref": "#/components/schemas/SimplePlayer"
+          },
+          "players": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ones": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "twos": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "threes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fours": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fives": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "team_power": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "territory_power": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "team_chance": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Territory": {
+        "title": "Territory",
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "region"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "region": {
+            "$ref": "#/components/schemas/Region"
+          }
+        }
+      },
+      "Region": {
+        "title": "Region",
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "Case": {
+        "type": "object",
+        "required": [
+          "case_type",
+          "created",
+          "createdby",
+          "description",
+          "id",
+          "status",
+          "updated",
+          "updatedby"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CaseStatus"
+          },
+          "case_type": {
+            "$ref": "#/components/schemas/CaseType"
+          },
+          "description": {
+            "type": "string"
+          },
+          "created": {
+            "$ref": "#/components/schemas/Date Time"
+          },
+          "updated": {
+            "$ref": "#/components/schemas/Date Time"
+          },
+          "createdby": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "updatedby": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "CaseStatus": {
+        "oneOf": [
+          {
+            "description": "Case has been created, but has not yet been acted upon",
+            "type": "string",
+            "enum": [
+              "Open"
+            ]
+          },
+          {
+            "description": "Case is awaiting on user action",
+            "type": "string",
+            "enum": [
+              "WaitingOnUser"
+            ]
+          },
+          {
+            "description": "Case is in progress",
+            "type": "string",
+            "enum": [
+              "InProgress"
+            ]
+          },
+          {
+            "description": "Case has been completed",
+            "type": "string",
+            "enum": [
+              "ClosedCompletd"
+            ]
+          },
+          {
+            "description": "Case has been rejected",
+            "type": "string",
+            "enum": [
+              "ClosedRejected"
+            ]
+          }
+        ]
+      },
+      "CaseType": {
+        "oneOf": [
+          {
+            "description": "Update team (home)",
+            "type": "string",
+            "enum": [
+              "AccountUpdateTeam"
+            ]
+          },
+          {
+            "description": "Update team (guest)",
+            "type": "string",
+            "enum": [
+              "AccountUpdatePlayingFor"
+            ]
+          },
+          {
+            "description": "Update teams (both home and guest)",
+            "type": "string",
+            "enum": [
+              "AccountUpdateTeams"
+            ]
+          },
+          {
+            "description": "Delete account",
+            "type": "string",
+            "enum": [
+              "AccountDelete"
+            ]
+          },
+          {
+            "description": "Merge account (when there are overlapping objects)",
+            "type": "string",
+            "enum": [
+              "AccountMerge"
+            ]
+          },
+          {
+            "description": "Report an account (see Description for why)",
+            "type": "string",
+            "enum": [
+              "AccountReport"
+            ]
+          },
+          {
+            "description": "Request streak reinstatement",
+            "type": "string",
+            "enum": [
+              "AccountStreak"
+            ]
+          }
+        ]
+      },
+      "Notification": {
+        "type": "object",
+        "required": [
+          "body",
+          "created",
+          "createdby",
+          "icon",
+          "id",
+          "permit_text_response",
+          "require_response",
+          "sender",
+          "title",
+          "updated",
+          "updatedby"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "sender": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "linked_case": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "permit_text_response": {
+            "type": "boolean"
+          },
+          "require_response": {
+            "type": "boolean"
+          },
+          "created": {
+            "$ref": "#/components/schemas/Date Time"
+          },
+          "updated": {
+            "$ref": "#/components/schemas/Date Time"
+          },
+          "createdby": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "updatedby": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "SystemInformation": {
+        "title": "System Information",
+        "description": "Information about the configuration of the backend.",
+        "type": "object",
+        "required": [
+          "captcha",
+          "chaos",
+          "discord",
+          "groupme",
+          "image",
+          "reddit",
+          "version"
+        ],
+        "properties": {
+          "version": {
+            "description": "The git version of the backend at compile time. `-modified` suffix indicates changes were made post-pull.",
+            "type": "string"
+          },
+          "discord": {
+            "description": "Whether login by Discord is enabled (true) or disabled (false).",
+            "type": "boolean"
+          },
+          "reddit": {
+            "description": "Whether login by Reddit is enabled (true) or disabled (false).",
+            "type": "boolean"
+          },
+          "groupme": {
+            "description": "Whether login by GroupMe is enabled (true) or disabled (false).",
+            "type": "boolean"
+          },
+          "chaos": {
+            "description": "Whether chaos",
+            "type": "boolean"
+          },
+          "image": {
+            "description": "Whether the `image` feature (deprecated), that creates images for sharing at roll time, is enabled.",
+            "type": "boolean"
+          },
+          "captcha": {
+            "description": "Whether the `captcha` feature (deprecated), that requires possible likely alts to enter a captcha, is enabled.",
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}
