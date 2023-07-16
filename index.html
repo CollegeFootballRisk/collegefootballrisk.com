@@ -1,410 +1,317 @@
-<!DOCTYPE HTML>
-<html>
-  <head>
-    <title>College Football Risk</title>
-    <script>
-    function myfunction(event) {
-      document.querySelectorAll('.chequed').forEach((x) => x.classList.remove("chequed"));
-      document.querySelectorAll('article').forEach((x) => x.classList.remove("show"));
-      document.getElementById(event.target.value).classList.add("show");
-      event.target.parentElement.classList.add("chequed");
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>College Football Risk Login</title>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet" />
+  <style media="screen">
+    *,
+    *:before,
+    *:after {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
     }
 
-    window.onload = function() {document.querySelectorAll("input[name='tab']").forEach((input) => {
-      input.addEventListener('change', myfunction);
-    })};
+    body {
+      background: url("https://www.goodfreephotos.com/albums/united-states/minnesota/duluth/lighthouse-on-lake-superior-duluth-minnesota.jpg") no-repeat center center fixed;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+    }
 
-    </script>
-    <style>
-      html {
-  padding: 0px;
-  margin: 0px;
-  width: 100%;
-  height: 100%;
-}
+    html {
+      font-size: calc(1vh + 1vw);
+    }
 
-body {
-  background: url(http://1.bp.blogspot.com/_w8vdEmYC4Kc/TNFcHdPbr_I/AAAAAAAAAL8/ekj_KLyv7dM/s1600/Firefox+taking+over+IE+1920x1200+[by+hrwalls.blogspot.com].jpg&ehk=lQw8jMOmf+tNfxDhbBvMoeunGH3Roqq1gDkbpXuDX8A=&risl=&pid=ImgRaw&r=0) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  padding: 0px;
-  margin: 0px;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
+    form {
+      max-height: 80vh;
+      width: 80vw;
+      max-width: calc(min(80vw, 70vh));
+      background-color: rgba(0, 0, 0, 0.33);
+      position: absolute;
+      transform: translate(-50%, -50%);
+      top: 50%;
+      left: 50%;
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+      padding: 35px 35px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
 
-#container {
-  width: 80vw;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 5px;
-  font-family: sans-serif;
-  line-height: 1;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  padding: 20px 40px;
-  box-sizing: border-box;
-  height: 95vh;
-  margin-top: 2.5vh;
-  margin-bottom: 2.5vh;
-  overflow: scroll;
-}
+    .ital {
+      color: white;
+    }
 
-.map-controls {
-  margin-left: auto;
-  margin-right: auto;
-  white-space: nowrap;
-  min-width: 80%;
-  justify-content: center;
-  display: flex;
-}
+    form * {
+      font-family: "Poppins", sans-serif;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+      outline: none;
+      border: none;
+    }
 
-.map-controls button,
-.map-controls label,
-.map-controls select {
-  color: white;
-  background: black;
-  font-weight: bold;
-  height: 1em;
-  border: none;
-  padding: 0.3em;
-  font-size: 1.3em;
-  line-height: 1em;
-}
+    label {
+      display: block;
+      margin-top: 30px;
+      font-size: 16px;
+      font-weight: 500;
+    }
 
-.map-controls button,
-.map-controls label {
-  min-width: 2em;
-  /*border-radius: 0.3em;*/
-  cursor: pointer;
-}
+    input {
+      display: block;
+      height: 50px;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.37);
+      border-radius: 3px;
+      padding: 0 10px;
+      margin-top: 8px;
+      font-size: 1em;
+      font-weight: 300;
+    }
 
-.map-controls button:hover,
-.map-controls label:hover,
-.map-controls button:focus,
-.map-controls label:focus {
-  background: blue;
-}
+    ::placeholder {
+      color: #e5e5e5;
+    }
 
-.map-controls input[type="radio"] {
-  display: none;
-}
+    button {
+      margin-top: 1.5em;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.7);
+      color: #080710;
+      padding: 15px 0;
+      font-size: 1em;
+      font-weight: 600;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-.map-controls select {
-  float: left;
-}
+    center,
+    span {
+      padding-top: 1.5em;
+    }
 
-.map-controls label {
-  cursor: pointer;
-  float: left;
-  padding: 0.3em;
-  justify-content: center;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  border-right-style: solid;
-  border-left-style: solid;
-  border-width: 1px;
-}
+    button:hover {
+      background-color: rgba(255, 255, 255, 0.07);
+    }
 
-.map-controls label:first-of-type {
-  border-top-left-radius: 0.3em;
-  border-bottom-left-radius: 0.3em;
-  border-left: none;
-}
+    i {
+      margin-right: 4px;
+      color: black;
+    }
 
-.map-controls label:last-of-type {
-  border-top-right-radius: 0.3em;
-  border-bottom-right-radius: 0.3em;
-  border-right: none;
-}
+    .logo>img {
+      width: 2em;
+      height: 2em;
+      margin-right: 0.5em;
+    }
 
-.chequed {
-  background: blue !important;
-}
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
 
-article{
-  display: none;
-}
+    .logo h1 {
+      font-size: 1.5em;
+      font-weight: 500;
+      line-height: 1.8em;
+      text-align: center;
+    }
 
-article.show {
-  display: unset !important;
-}
-    </style>
-  </head>
-  <body>
-    <div id="container">
-  <div class="map-controls top-control">
-    <label title="owners map" class="chequed">
-      <input type="radio" name="tab" value="0" checked="checked" />
-      <b class="hideOnMobile">Thank You</b>
-    </label>
-    <label title="heat map">
-      <input type="radio" name="tab" value="1" />
-      <b class="hideOnMobile">Season 1</b>
-    </label>
-    <label title="heat map">
-      <input type="radio" name="tab" value="2" />
-      <b class="hideOnMobile">Season 2</b>
-    </label>
-    <label title="heat map">
-      <input type="radio" name="tab" value="3" />
-      <b class="hideOnMobile">Season 3</b>
-    </label>
-  </div>
-  <div id="content">
-    <article id="0" class="show">
-	    <!--
+    .logo h2 {
+      font-size: 1em;
+      font-weight: 500;
+      line-height: 1.8em;
+      text-align: center;
+    }
+
+    #pageTitle {
+      display: none;
+    }
+
+    #tabLogin {
+      display: none;
+      word-wrap: break-word;
+    }
+
+    #tabBanned {
+      display: none;
+      word-wrap: break-word;
+    }
+
+    #tabPending {
+      display: unset;
+      word-wrap: break-word;
+    }
+
+    #tabSelectUsername {
+      display: none;
+      word-wrap: break-word;
+    }
+
+    #tabCreateOrConnect {
+      display: none;
+      word-wrap: break-word;
+    }
+
+    #tabSelectHomeTeam {
+      display: none;
+      word-wrap: break-word;
+    }
+
+    #tabSelectGuestTeam {
+      display: none;
+      word-wrap: break-word;
+    }
+
+    .inputContainer {
+      position: relative;
+    }
+
+    .inputIcon {
+      color: white;
+      top: 12px;
+      left: 15px;
+    }
+
+    .footer {
+      display: flex;
+      align-content: center;
+      justify-content: center;
+      position: absolute;
+      color: white;
+      width: 400px;
+      height: 1.5em;
+      font-size: 0.75em;
+      position: absolute;
+      transform: translate(-50%, -50%);
+      bottom: 0;
+      left: 50%;
+    }
+
+    .footer a {
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <form action="https://discord.gg/n5SWsxgneh" method="get">
+    <div class="logo">
+      <img src="https://cdn.discordapp.com/attachments/746178179844145154/1112633263840841748/logo-rainbow.png"
+        alt="logo" title="logo" />
+      <h1>College Football Risk</h1>
+      <br />
+      <h2 id="pageTitle">Login</h2>
+    </div>
+    <div id="tabLogin">
+      <button class="go" alt="login with google" title="login with google">
+        <i class="fab fa-google"></i> Google
+      </button>
+      <button class="di" alt="login with discord" title="login with discord">
+        <i class="fab fa-discord"></i> Discord
+      </button>
+      <button class="re" alt="login with reddit" title="login with reddit">
+        <i class="fab fa-reddit"></i> Reddit
+      </button>
       <center>
-        <h1 style="text-align: center;">
-          College Football Risk
-        </h1>
-	<b style="color: red; background: black;">End of season survey at <a href="https://docs.google.com/forms/d/e/1FAIpQLSeYVf5JlzW11hFLnaFC40ODTN4qfsngglKAGxlAMF8mPnFRkA/viewform">this link through 3/20.</a></b>
-	<br/><br/>
-        <b>This website has, for the moment, been archived. Sign up for the <a href="https://groups.google.com/g/collegefootballrisk">Google Group</a> to be notified of Season 4.</b>
+        <span>Photo:
+          <a
+            href="https://www.goodfreephotos.com/united-states/minnesota/duluth/lighthouse-on-lake-superior-duluth-minnesota.jpg.php">Duluth,
+            Minnesota</a></span>
       </center>
-      <div class="thanks-container">
-        <h1>Thank You</h1>
-        <h2>A letter from lead developer u/Mautamu</h2>
-        <blockquote>On behalf of the Game Mods and Game Devs, I would like to sincerely thank
-          you for participating in season 3. Without you, this season never could have
-          happened. <br>
-          Additionally, this game is deeply indebted to the following individuals for their
-          contributions to the game:
-          <ul>
-            <li>All beta testers (across Grocery Store Risk, 2.2, 2.3, and the many
-              Aggie Risk games) and those who participated in the various townhalls</li>
-            <li>u/BakonyDraco, for the game concept, for his perpetual involvement, and
-              for advice</li>
-            <li>u/BlueSCar, for making the game as it exists today and his assistance in
-              getting 3.0 off the ground</li>
-            <li>u/The_Ghost_of_TxAg70, for developing the excellent survival guide which
-              has helped many teams</li>
-            <li>u/hypercube42342, u/GoCardinal07, CuriousCardinal, and u/dbacksfan, for
-              answering the call to help end the reign of terror caused by the bots</li>
-            <li>u/-MrWrightt-, for being a great adviser with respect to strategy and
-              being a good friend</li>
-            <li>u/littlemojo, for developing the game map</li>
-            <li>pmcintyre3:github, u/bluemansam, u/jakers0516, u/EpicWolverine,
-              u/lurochanda, mkomitsky:github, u/mangojuulpods, u/raiden11x,
-              u/larryless, u/irongold22, and u/r4r1bz for their contributions to game
-              development</li>
-            <li>u/sup3rtom2000, for serving as the wgsec auditor</li>
-            <li>u/ItalianReptar, for giving everyone stats posts and an excellent Python
-              script for move analysis</li>
-            <li>u/DodgerofZion, u/mcbb14, u/The_Ghost_of_TxAg70, u/MangoJuulPods,
-              u/DumbGamers22 and others for bringing the community together with
-              Twitch streams</li>
-            <li>All other game mods (u/Semicorrect, u/RogueZ1, u/bobsled_time,
-              u/Belgara, u/CLG_LustBoy, u/Crosley8, u/inspector_tortoise, and
-              u/ItalianReptar) for moderating the game and keeping things running,
-              especially for their dedication to calming the bot issues</li>
-            <li>Mozilla Research, the Rust Foundation, Sergio Benitez, Jeb Rosen, Sage
-              Griffin, Graydon Hoare, and the other <a href="https://thanks.rust-lang.org/">Rust Language contributors</a> and library maintainers, without whom Rust Risk (the backend for CFBR)
-              would not be possible.</li>
-            <li>All those who submitted bug reports, game change ideas, or accessibility
-              reports, or contributed in other ways to the advancement of the art</li>
-          </ul>
-
-          <p>Although this community has its flaws, I have met some truly fantastic
-            people in it. In many ways, Season 3 is a direct result of u/32RH and
-            u/AggieAlex's messages to try to get me to stop roguing (my personal
-            objective in Season 2 had been a maroon Kansas which unfortunately
-            conflicted with A&amp;M's alliance with OU). Their messages caused me to join
-            the Aggie Discord where I have met many people I consider friends. In
-            order to maintain the game's integrity, I had left the Aggie Discord
-            server for the duration of Season 3 and learned how much I appreciate the
-            community that jyost17, avocado, igloo27, txag70, and others have
-            cultivated. It is through this lens that we find how u/blinzz, u/32RH, the
-            Aggie Discord mods, and u/AggieAlex have had outsized influence on 3.0
-            coming to fruition. The same can be said of the Zoomer chat and the CFBR
-            server; I have many fond memories of u/Belgara, u/BikkiBottom,
-            u/Absurd-Fries-9296, u/InvertThatVeer, u/AProBenji and others in either
-            pizza/food conversations or any one of thousands of other intriguing
-            topics.</p>
-
-          <p>Additionally, I would like to thank those who have raised legitimate
-            concerns about the game in appropriate manners. Although I may disagree on
-            the manner in which some things have been raised, some genuine points have
-            been raised about the health of the game, the accessibility of the UI, the
-            influence of bots, and other topics. I hope that the changes made to the
-            game and/or to the community have not gone unnoticed. I believe that some
-            more sweeping changes will be warranted for Season 4, and hope that
-            everyone can join in a collaborative and supportive environment for
-            bringing about these changes to make Season 4 the best season of CFBR yet.</p>
-          <p>As the CFBR-oriented chats begin to go dormant for the next few months, I
-            will be taking a much-needed break to recalibrate. In the CFBR offseason,
-            we are looking for leaders for Season 4 both from a development but also
-            from a moderation perspective; my hope for Season 4 is that we can have
-            many people involved in the operations of running the game, especially
-            from previously underrepresented teams. It's an open secret that in 3.0 we
-            focused on transparency of game development and did not take many risks or
-            make many substantial changes in order to entice folks to participate once
-            more and build trust; in exchange, we hope many contributors come forward
-            to empower more fundamental changes to the game in Season 4.</p>
-
-          <p>If I left you out of this, I apologize! There are <i>so many</i> individuals
-            who I want to thank for their contributions to the community or the game but
-            I also want to keep this readable. Know that your contributions have not gone
-            unnoticed and are much appreciated.</p>
-          <br>
-          Sincerely, <br> u/Mautamu
-          <br><br>
-          <i>Long live the legion!
-            🇨🇿&nbsp;🇩🇰&nbsp;🇺🇦</i>
-        </blockquote>
-
-        <h2>Comments Regarding Season 4</h2>
-        <p>Naturally, many questions will come up over the course of the next few
-          months regarding Season 4. The details of Season 4 have not yet been
-          determined, and the post-season survey will be a large input into the Season
-          4 timeline. The best way to see the changes made to the game that you want
-          is to get involved. Anyone with experience in or willingness to learn UI
-          (HTML/JavaScript/CSS) or Backend (SQL/Rust/Python) is welcome to submit PRs
-          for changes you want to see in a potential Season 4. Regardless of
-          programming experience or desire, all are welcome to participate in the
-          public beta games and contribute to the public forums which will likely
-          begin in early May.</p>
-
-        <h2>Server Deprecation</h2>
-        <p>Beginning on or around March 20th, 2023, the server on which
-          https://collegefootballrisk.com/ is hosted will be decommisioned and the
-          website will move into an "archived" state. You can stay tuned to updates by
-          subscribing to the <a href="https://groups.google.com/g/collegefootballrisk">Google Group</a>,
-          <a href="https://www.reddit.com/r/CollegeFootballRisk/">the Subreddit</a>,
-          or
-          <a href="http://discord.gg/KG2sKHg">the Discord</a>.</p>
-
-        <h2>Donations</h2>
-        <p>If you would like to donate server time/space for Season 4, please feel free
-          to reach out to <a href="https://www.reddit.com/user/mautamu/">u/Mautamu</a>. If you feel compelled to donate in other ways, feel free to donate to
-          <a href="https://foundation.mozilla.org/en/?form=donate&amp;c_id=7014x000000eQOH&amp;utm_source=mozilla.org&amp;utm_campaign=moco&amp;utm_medium=referral&amp;utm_content=footer">Mozilla</a>, the
-          <a href="https://support.pkdcure.org/give/460393/#!/donation/checkout">PKD Foundation</a>, or the
-          <a href="https://supporters.eff.org/donate/join-eff-4">Electronic Frontier Foundation</a>.</p>
-        <center><iframe src="https://www.youtube-nocookie.com/embed/ZHYLINWSjfw" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" width="560" height="315" frameborder="0"></iframe></center>
+    </div>
+    <div id="tabCreateOrConnect">
+      <h3>
+        Welcome, %platform% user
+        %UsernameUsernameUsernameUsernameUsernameUsernameUsernameUsername%
+      </h3>
+      <button class="di" alt="create account" title="create account">
+        <i class="fa fa-user-plus"></i> Create New Account
+      </button>
+      <button class="re" alt="link existing account" title="link existing account">
+        <i class="fa fa-link"></i> Link Existing Account
+      </button>
+    </div>
+    <div id="tabSelectUsername">
+      <h3>
+        Welcome, %platform% user
+        %UsernameUsernameUsernameUsernameUsernameUsernameUsernameUsername%
+      </h3>
+      <label for="username">Choose your CFBR username:</label>
+      <div class="inputContainer">
+        <input type="text" placeholder="Username" id="username" />
       </div>
--->
-	    <br/><br/>
-	    <center>
-		    <b>A small handfull of former game mods have decided to hold the subreddit and the Discord server hostage on their own accord and have forcefully removed newer mods and game devs. You can join the new server here: <a href="https://discord.gg/q8uB4xJqJC">New official CFBR server</a> </b><br/>
-		    <p>
-			    Due to unforseen circumstances, r/collegefootballrisk and the associated Discord are now no longer viable for discussion of the game and the mechanics therein. Please do not attack the old mods, but feel free to join us for our first Town Hall in the new Discord on 4 April 2023.</p>
-		    <p> More details to come, stay tuned! </p>
-	    </center>
-    </article>
-    <article id="1">
-<style type="text/css">
-	table.tableizer-table {
-		font-size: 12px;
-		border: 1px solid #CCC; 
-		font-family: Arial, Helvetica, sans-serif;
-	} 
-	.tableizer-table td {
-		padding: 4px;
-		margin: 3px;
-		color: white;
-		background: black;
-		border: 1px solid #CCC;
-	}
-	.tableizer-table th {
-		background-color: #104E8B; 
-		color: #FFF;
-		font-weight: bold;
-	}
-</style>
-<center>
-<table class="tableizer-table">
-<thead><tr class="tableizer-firstrow"><th>Rank</th><th>------------Team------------</th><th>Players</th><th>Territories</th><th>Mercs</th><th>Stars</th><th>Efficiency</th><th>PPP</th><th>Regions</th><th>Adj. Stars</th></tr></thead><tbody>
- <tr><td>1</td><td>Florida</td><td>760</td><td>26</td><td>39</td><td>7779</td><td>299.19</td><td>9.74</td><td>0</td><td>7779</td></tr>
- <tr><td>2</td><td>Michigan</td><td>1257</td><td>24</td><td>16</td><td>6131</td><td>255.46</td><td>4.82</td><td>0</td><td>6131</td></tr>
- <tr><td>3</td><td>Nebraska</td><td>435</td><td>15</td><td>4</td><td>5115</td><td>341</td><td>11.65</td><td>0</td><td>5115</td></tr>
- <tr><td>4</td><td>Georgia Tech</td><td>423</td><td>10</td><td>23</td><td>2809</td><td>280.9</td><td>6.3</td><td>0</td><td>2809</td></tr>
- <tr><td>4</td><td>Oklahoma</td><td>148</td><td>10</td><td>4</td><td>2113</td><td>211.3</td><td>13.9</td><td>0</td><td>2113</td></tr>
- <tr><td>4</td><td>Ohio State</td><td>332</td><td>10</td><td>49</td><td>4509</td><td>450.9</td><td>11.83</td><td>0</td><td>4509</td></tr>
- <tr><td>7</td><td>Chaos</td><td>38</td><td>9</td><td>252</td><td>3876</td><td>430.67</td><td>13.37</td><td>0</td><td>3876</td></tr>
- <tr><td>8</td><td>Texas A&M</td><td>206</td><td>7</td><td>0</td><td>2333</td><td>333.29</td><td>11.33</td><td>0</td><td>2333</td></tr>
- <tr><td>8</td><td>Alabama</td><td>193</td><td>7</td><td>2</td><td>2695</td><td>385</td><td>13.82</td><td>0</td><td>2695</td></tr>
- <tr><td>10</td><td>Wisconsin</td><td>201</td><td>6</td><td>1</td><td>1827</td><td>304.5</td><td>9.04</td><td>0</td><td>1827</td></tr>
- <tr><td>11</td><td>Texas</td><td>226</td><td>5</td><td>2</td><td>2563</td><td>512.6</td><td>11.24</td><td>0</td><td>2563</td></tr>
- <tr><td>12</td><td>Clemson</td><td>138</td><td>2</td><td>1</td><td>1517</td><td>758.5</td><td>10.91</td><td>0</td><td>1517</td></tr>
-</tbody></table>
-</center>
-    </article>
-    <article id="2">
-<style type="text/css">
-	table.tableizer-table {
-		font-size: 12px;
-		border: 1px solid #CCC; 
-		font-family: Arial, Helvetica, sans-serif;
-	} 
-	.tableizer-table td {
-		padding: 4px;
-		margin: 3px;
-		color: white;
-		background: black;
-		border: 1px solid #CCC;
-	}
-	.tableizer-table th {
-		background-color: #104E8B; 
-		color: #FFF;
-		font-weight: bold;
-	}
-</style>
-<center>
-<table class="tableizer-table">
-<thead><tr class="tableizer-firstrow"><th>Rank</th><th>------------Team------------</th><th>Players</th><th>Territories</th><th>Mercs</th><th>Stars</th><th>Efficiency</th><th>PPP</th><th>Regions</th><th>Adj. Stars</th></tr></thead><tbody>
- <tr><td>1</td><td>Ohio State</td><td>1739</td><td>23</td><td>16</td><td>7002</td><td>304.43</td><td>3.99</td><td>0</td><td>7002</td></tr>
- <tr><td>2</td><td>Texas A&M</td><td>776</td><td>21</td><td>2</td><td>3760</td><td>179.05</td><td>4.83</td><td>0</td><td>3760</td></tr>
- <tr><td>3</td><td>Michigan</td><td>1696</td><td>18</td><td>1</td><td>8855</td><td>491.94</td><td>5.22</td><td>0</td><td>8855</td></tr>
- <tr><td>4</td><td>Georgia Tech</td><td>603</td><td>16</td><td>55</td><td>4254</td><td>265.88</td><td>6.47</td><td>0</td><td>4254</td></tr>
- <tr><td>5</td><td>Wisconsin</td><td>470</td><td>14</td><td>1</td><td>3193</td><td>228.07</td><td>6.78</td><td>0</td><td>3193</td></tr>
- <tr><td>6</td><td>Nebraska</td><td>359</td><td>12</td><td>3</td><td>3643</td><td>303.58</td><td>10.06</td><td>0</td><td>3643</td></tr>
- <tr><td>6</td><td>Chaos</td><td>24</td><td>12</td><td>308</td><td>2888</td><td>240.67</td><td>8.7</td><td>0</td><td>2888</td></tr>
- <tr><td>8</td><td>Alabama</td><td>275</td><td>10</td><td>1</td><td>2312</td><td>231.2</td><td>8.38</td><td>0</td><td>2312</td></tr>
- <tr><td>9</td><td>Texas</td><td>264</td><td>5</td><td>0</td><td>2430</td><td>486</td><td>9.2</td><td>0</td><td>2430</td></tr>
-</tbody></table>
-</center>
-    </article>
-    <article id="3">
-<style type="text/css">
-	table.tableizer-table {
-		font-size: 12px;
-		border: 1px solid #CCC; 
-		font-family: Arial, Helvetica, sans-serif;
-	} 
-	.tableizer-table td {
-		padding: 4px;
-		margin: 3px;
-		border: 1px solid #CCC;
-		color: white;
-		background: black;
-	}
-	.tableizer-table th {
-		background-color: #104E8B; 
-		color: #FFF;
-		font-weight: bold;
-	}
-</style>
-<center>
-<table class="tableizer-table">
-<thead><tr class="tableizer-firstrow"><th>Rank</th><th>------------Team------------</th><th>Players</th><th>Territories</th><th>Mercs</th><th>Stars</th><th>Efficiency</th><th>PPP</th><th>Regions</th><th>Adj. Stars</th></tr></thead><tbody>
- <tr><td>1</td><td>Michigan</td><td>1470</td><td>71</td><td>53</td><td>4721</td><td>66.49</td><td>3.1</td><td>0</td><td>4721</td></tr>
- <tr><td>2</td><td>Ohio State</td><td>808</td><td>34</td><td>45</td><td>2619</td><td>77.03</td><td>3.07</td><td>0</td><td>2619</td></tr>
- <tr><td>3</td><td>Texas A&M</td><td>391</td><td>29</td><td>45</td><td>1586</td><td>54.69</td><td>3.64</td><td>0</td><td>1586</td></tr>
- <tr><td>4</td><td>Wisconsin</td><td>221</td><td>21</td><td>35</td><td>1049</td><td>49.95</td><td>4.1</td><td>0</td><td>1049</td></tr>
- <tr><td>5</td><td>Georgia Tech</td><td>146</td><td>11</td><td>28</td><td>685</td><td>62.27</td><td>3.94</td><td>0</td><td>685</td></tr>
- <tr><td>6</td><td>Chaos</td><td>3</td><td>10</td><td>98</td><td>393</td><td>39.3</td><td>3.89</td><td>0</td><td>393</td></tr>
- <tr><td>7</td><td>Iowa State</td><td>49</td><td>6</td><td>93</td><td>515</td><td>85.83</td><td>3.63</td><td>0</td><td>515</td></tr>
- <tr><td>8</td><td>Alabama</td><td>117</td><td>4</td><td>5</td><td>445</td><td>111.25</td><td>3.65</td><td>0</td><td>445</td></tr>
-</tbody></table>
-    </article>
-</center>
-  </div>
-</div>
+      <button class="fa" alt="save username" title="save username">
+        <i class="fa fa-save"></i> Save
+      </button>
+    </div>
+    <div id="tabSelectHomeTeam">
+      <h3>
+        Welcome,%UsernameUsernameUsernameUsernameUsernameUsernameUsernameUsername%
+      </h3>
+      <label for="username">Time your home team:</label>
+      <div class="inputContainer">
+        <input type="text" placeholder="Username" id="username" />
+      </div>
+      <button class="fa" alt="save team" title="save team">
+        <i class="fa fa-save"></i> Save
+      </button>
+    </div>
+    <div id="tabSelectGuestTeam">
+      <h3>
+        Welcome,
+        %UsernameUsernameUsernameUsernameUsernameUsernameUsernameUsername%
+      </h3>
+      <label for="username">{team} has been eliminated, choose a secondary team:</label>
+      <div class="inputContainer">
+        <input type="text" placeholder="Username" id="username" />
+      </div>
+      <button class="fa" alt="save team" title="save team">
+        <i class="fa fa-save"></i> Save
+      </button>
+    </div>
+    <div id="tabBanned">
+      <h3>
+        Hello,
+        %UsernameUsernameUsernameUsernameUsernameUsernameUsernameUsername%
+      </h3>
+      <br />
+      <span>We regret to inform that you have been permanently banned from
+        College Football Risk.</span>
+    </div>
 
-  </body>
+    <div id="tabPending">
+      <h3 style="text-align: center">Hello, fellow adventurer!</h3>
+      <br />
+      <span>College Football Risk will be back soon. In the meantime, feel free
+        to join our new Discord:
+      </span>
+      <button class="di" alt="join discord" title="join discord">
+        <i class="fab fa-discord"></i> Discord
+      </button>
+      <p style="margin-top: 1.5em">
+        <i class="ital">Pssst, developers: feel free to
+          <a href="https://collegefootballrisk.com/docs/index.html">check out the new API prototype.</a></i>
+      </p>
+    </div>
+  </form>
+  <div class="footer">
+    <text>Photo:
+      <a
+        href="https://www.goodfreephotos.com/united-states/minnesota/duluth/lighthouse-on-lake-superior-duluth-minnesota.jpg.php">Duluth,
+        Minnesota</a></text>
+  </div>
+</body>
+
 </html>
